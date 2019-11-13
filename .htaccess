@@ -1,0 +1,14 @@
+# Turn rewriting on
+RewriteEngine On
+
+# Allow any files or directories that exist to be displayed directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^edge/scripts/(.*)$     internal/modules/scripts/$1 [L,NC,QSA]
+RewriteRule ^sessions$              internal/session/create-session.php [L,NC,QSA]
+RewriteRule ^login$                 internal/session/authenticate.php [L,NC,QSA]
+
+RewriteRule ^([a-zA-Z0-9_-]+)$                      index.php?module_url=$1 [L,NC,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$     index.php?category_url=$1&module_url=$2 [L,NC,QSA]
