@@ -66,6 +66,7 @@ require_once("internal/session/validate-session.php");
 
     <!--end:: Vendor Plugins -->
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/content-placeholder.css?v=<?php echo date("dmYhis"); ?>" rel="stylesheet" type="text/css"/>
 
     <!--begin:: Vendor Plugins for custom pages -->
     <link href="assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
@@ -111,6 +112,7 @@ require_once("internal/session/validate-session.php");
 
     <!--end::Layout Skins -->
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
+
 </head>
 
 <!-- end::Head -->
@@ -872,8 +874,8 @@ require_once("internal/session/validate-session.php");
             <?php
             $heading = $modules->loadHeading();
             $module = $modules->load();
-
             ?>
+
             <!-- end:: Header -->
             <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
@@ -884,9 +886,12 @@ require_once("internal/session/validate-session.php");
 
                     <!-- begin:: Content -->
                     <div class="kt-container  kt-grid__item kt-grid__item--fluid">
+                        <div id="slApplication">
 
-                        <?php if ($module) require_once($module); ?>
+                            <?php if ($module) require_once($module); ?>
+                        </div>
                     </div>
+
 
                     <!-- end:: Content -->
                 </div>
@@ -1358,6 +1363,8 @@ require_once("internal/session/validate-session.php");
 <!--begin::Global Theme Bundle(used by all pages) -->
 
 <!--begin:: Vendor Plugins -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="assets/plugins/general/jquery/dist/jquery.js" type="text/javascript"></script>
 <script src="assets/plugins/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 <script src="assets/plugins/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -1516,6 +1523,20 @@ require_once("internal/session/validate-session.php");
 
 <!--begin::Page Scripts(used by this page)
 <script src="assets/js/pages/dashboard.js" type="text/javascript"></script> -->
+<script type="text/javascript">
+    var jwt_token = "<?=$session->getJwtToken(); ?>";
+    Number.prototype.formatMoney = function(places, symbol, thousand, decimal) {
+        places = !isNaN(places = Math.abs(places)) ? places : 2;
+        symbol = symbol !== undefined ? symbol : "$";
+        thousand = thousand || ",";
+        decimal = decimal || ".";
+        var number = this,
+            negative = number < 0 ? "-" : "",
+            i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+    };
+</script>
 <?= $modules->scripts(); ?>
 <!--end::Page Scripts -->
 </body>

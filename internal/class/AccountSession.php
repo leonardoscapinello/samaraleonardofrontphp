@@ -11,6 +11,27 @@ class AccountSession
 
     private $cookie_name = "SL_SESSION";
 
+
+    public function __construct()
+    {
+        global $database;
+        global $charset;
+        $id_jwt = $this->getCookie($this->cookie_name);
+        if ($id_jwt !== null) {
+            try {
+                $database->query("SELECT * FROM accounts_session WHERE MD5(id_session) = ?");
+                $database->bind(1, $id_jwt);
+                $result = $database->resultsetObject();
+                foreach ($result as $key => $value) {
+                    $this->$key = $charset->singleUTF8($value);
+                }
+            } catch (Exception $exception) {
+                echo($exception);
+            }
+        }
+    }
+
+
     public function getIdSession()
     {
         return $this->id_session;
