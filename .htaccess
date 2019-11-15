@@ -12,3 +12,4 @@ RewriteRule ^login$                 internal/session/authenticate.php [L,NC,QSA]
 
 RewriteRule ^([a-zA-Z0-9_-]+)$                      index.php?module_url=$1 [L,NC,QSA]
 RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$     index.php?category_url=$1&module_url=$2 [L,NC,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([0-9_-]+)$     index.php?category_url=$1&module_url=$2&id=$3 [L,NC,QSA]

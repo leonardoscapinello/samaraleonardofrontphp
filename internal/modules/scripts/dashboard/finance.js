@@ -5,7 +5,7 @@ new Vue({
             info: null,
             config: {
                 headers: {
-                    Authorization: "Bearer " + jwt_token
+                    Authorization: "Bearer " + userSession.token
                 }
             },
         }

@@ -12,8 +12,7 @@ require_once("internal/session/validate-session.php");
     <meta charset="utf-8"/>
     <title>Samara&Leonardo | Gestão Financeira</title>
     <meta name="description" content="Latest updates and statistic charts">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
 
@@ -66,7 +65,7 @@ require_once("internal/session/validate-session.php");
 
     <!--end:: Vendor Plugins -->
     <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/css/content-placeholder.css?v=<?php echo date("dmYhis"); ?>" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/content-placeholder.css" rel="stylesheet" type="text/css"/>
 
     <!--begin:: Vendor Plugins for custom pages -->
     <link href="assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
@@ -1363,6 +1362,7 @@ require_once("internal/session/validate-session.php");
 <!--begin::Global Theme Bundle(used by all pages) -->
 
 <!--begin:: Vendor Plugins -->
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="assets/plugins/general/jquery/dist/jquery.js" type="text/javascript"></script>
@@ -1511,6 +1511,7 @@ require_once("internal/session/validate-session.php");
 <script src="assets/plugins/custom/tinymce/themes/silver/theme.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/tinymce/themes/mobile/theme.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/jkanban/dist/jkanban.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.mask.js" type="text/javascript"></script>
 
 <!--end:: Vendor Plugins for custom pages -->
 
@@ -1524,8 +1525,13 @@ require_once("internal/session/validate-session.php");
 <!--begin::Page Scripts(used by this page)
 <script src="assets/js/pages/dashboard.js" type="text/javascript"></script> -->
 <script type="text/javascript">
-    var jwt_token = "<?=$session->getJwtToken(); ?>";
-    Number.prototype.formatMoney = function(places, symbol, thousand, decimal) {
+    var userSession =
+        {
+            user: "<?=$session->getIdAccount()?>",
+            token: "<?=$session->getJwtToken()?>"
+        }
+
+    Number.prototype.formatMoney = function (places, symbol, thousand, decimal) {
         places = !isNaN(places = Math.abs(places)) ? places : 2;
         symbol = symbol !== undefined ? symbol : "$";
         thousand = thousand || ",";
@@ -1536,6 +1542,25 @@ require_once("internal/session/validate-session.php");
             j = (j = i.length) > 3 ? j % 3 : 0;
         return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
     };
+
+    function formatDate(inputFormat) {
+        function pad(s) {
+            return (s < 10) ? '0' + s : s;
+        }
+
+        var d = new Date(inputFormat)
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+    }
+
+    function editTransaction(id_transaction) {
+        window.location.href = '<?=SERVER_ADDRESS?>/transactions/edit' + id_transaction;
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(".money").mask('000000000000.00', {reverse: true});
+        }, 1000);
+    });
 </script>
 <?= $modules->scripts(); ?>
 <!--end::Page Scripts -->
