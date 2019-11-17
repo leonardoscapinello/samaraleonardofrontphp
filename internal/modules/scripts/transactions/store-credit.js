@@ -37,7 +37,7 @@ new Vue({
         },
         getWallets: function () {
             axios
-                .get('http://173.249.32.58:3030/wallets', this.config)
+                .get('http://173.249.32.58:3030/wallets/credit', this.config)
                 .then(response => (this.wallets = response.data));
         },
         store: function (event) {
