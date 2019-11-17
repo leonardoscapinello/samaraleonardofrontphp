@@ -1480,8 +1480,7 @@ require_once("internal/session/validate-session.php");
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.flash.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.html5.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.print.js" type="text/javascript"></script>
-<script src="assets/plugins/custom/datatables.net-colreorder/js/dataTables.colReorder.min.js"
-        type="text/javascript"></script>
+<script src="assets/plugins/custom/datatables.net-colreorder/js/dataTables.colReorder.min.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js"
         type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"

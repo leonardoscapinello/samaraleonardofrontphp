@@ -32,7 +32,7 @@ new Vue({
     methods: {
         getCategories: function () {
             axios
-                .get('http://173.249.32.58:3030/categories/credit', this.config)
+                .get('http://173.249.32.58:3030/categories/debit', this.config)
                 .then(response => (this.categories = response.data));
         },
         getWallets: function () {
@@ -47,7 +47,7 @@ new Vue({
             var formData = new FormData(form);
 
             formData.append("id_user", userSession.user);
-            formData.append("is_credit", true);
+            formData.append("is_credit", false);
 
             var object = {};
             formData.forEach(function (value, key) {

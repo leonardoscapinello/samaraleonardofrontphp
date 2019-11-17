@@ -120,8 +120,33 @@ class Modules
             if ($category_name) {
                 $database->query("SELECT id_category FROM modules_categories WHERE category_url = :categoryname OR MD5(category_url) = :categoryname");
                 $database->bind(":categoryname", $category_name);
-                $result = $database->single();
-                if (count($result) > 0) return $result['id_category'];
+                $result = $database->resultset();
+                if (count($result) > 0) return $result[0]['id_category'];
+            }
+        } catch (Exception $exception) {
+            error_log($exception);
+        }
+        return 0;
+    }
+
+    private function getRequestModule()
+    {
+        global $database;
+        $module_url = $this->getRequest("module_url");
+        $id_category = $this->getRequestCategory();
+
+        try {
+            if ($module_url) {
+                if ($id_category > 0) {
+                    $database->query("SELECT id_module FROM modules WHERE (module_url = :module_url OR MD5(module_url) = :module_url) AND id_category = :id_category");
+                    $database->bind(":module_url", $module_url);
+                    $database->bind(":id_category", $id_category);
+                } else {
+                    $database->query("SELECT id_module FROM modules WHERE module_url = :module_url OR MD5(module_url) = :module_url");
+                    $database->bind(":module_url", $module_url);
+                }
+                $result = $database->resultset();
+                if (count($result) > 0) return $result[0]['id_module'];
             }
         } catch (Exception $exception) {
             error_log($exception);
@@ -129,21 +154,27 @@ class Modules
         return null;
     }
 
-    private function getRequestModule()
+    public function getModuleUrlByKey($module_token)
     {
         global $database;
-        $module_url = $this->getRequest("module_url");
+        $final_url = SERVER_ADDRESS;
         try {
-            if ($module_url) {
-                $database->query("SELECT id_module FROM modules WHERE module_url = :module_url OR MD5(module_url) = :module_url");
-                $database->bind(":module_url", $module_url);
-                $result = $database->single();
-                if (count($result) > 0) return $result['id_module'];
+            if ($module_token !== "") {
+
+                $database->query("SELECT category_url, module_url FROM modules m LEFT JOIN modules_categories mc ON mc.id_category = m.id_category WHERE module_token = ?");
+                $database->bind(1, $module_token);
+
+                $result = $database->resultset();
+                if (count($result) > 0) {
+                    $category_url = $result[0]['category_url'];
+                    $module_url = $result[0]['module_url'];
+                    $final_url .= $category_url . "/" . $module_url;
+                }
             }
         } catch (Exception $exception) {
             error_log($exception);
         }
-        return null;
+        return $final_url;
     }
 
 
