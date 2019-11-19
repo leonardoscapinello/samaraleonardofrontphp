@@ -1,4 +1,4 @@
-"use strict";
+"use strict"; 
 var KTDefaultDatatableDemo = function () {
     return {
         init: function () {
