@@ -18,7 +18,7 @@ new Vue({
     methods: {
         getDashboard: function () {
             axios
-                .get('http://173.249.32.58:3030/dashboard', this.config)
+                .get('https://api.leonardosamara.com:8443/dashboard', this.config)
                 .then(response => (this.info = response.data))
         }
     },

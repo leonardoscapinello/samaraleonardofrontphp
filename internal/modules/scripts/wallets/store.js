@@ -69,7 +69,7 @@ new Vue({
             }
 
             axios
-                .post('http://173.249.32.58:3030/wallets', json, this.config)
+                .post('https://api.leonardosamara.com:8443/wallets', json, this.config)
                 .then(function (response) {
                     swal.fire("Deu certo!", "Carteira cadastrada com sucesso", "success");
                 })

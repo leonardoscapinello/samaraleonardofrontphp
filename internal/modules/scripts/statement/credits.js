@@ -29,7 +29,7 @@ var KTDefaultDatatableDemo = function () {
                     type: "remote",
                     source: {
                         read: {
-                            url: "http://173.249.32.58:3030/transactions/credits",
+                            url: "https://api.leonardosamara.com:8443/transactions/credits",
                             method: 'GET',
                             headers: {
                                 Authorization: "Bearer " + userSession.token

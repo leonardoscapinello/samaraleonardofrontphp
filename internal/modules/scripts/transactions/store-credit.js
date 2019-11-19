@@ -32,12 +32,12 @@ new Vue({
     methods: {
         getCategories: function () {
             axios
-                .get('http://173.249.32.58:3030/categories/credit', this.config)
+                .get('https://api.leonardosamara.com:8443/categories/credit', this.config)
                 .then(response => (this.categories = response.data));
         },
         getWallets: function () {
             axios
-                .get('http://173.249.32.58:3030/wallets/credit', this.config)
+                .get('https://api.leonardosamara.com:8443/wallets/credit', this.config)
                 .then(response => (this.wallets = response.data));
         },
         store: function (event) {
@@ -62,7 +62,7 @@ new Vue({
             }
 
             axios
-                .post('http://173.249.32.58:3030/transactions', json, this.config)
+                .post('https://api.leonardosamara.com:8443/transactions', json, this.config)
                 .then(function (response) {
                     swal.fire("Deu certo!", "Registro concluído com sucesso", "success");
                 })

@@ -33,12 +33,12 @@ new Vue({
     methods: {
         getWallets: function () {
             axios
-                .get('http://173.249.32.58:3030/wallets/credit', config)
+                .get('https://api.leonardosamara.com:8443/wallets/credit', config)
                 .then(response => (this.wallets = response.data));
         },
         getCreditCardWallets: function () {
             axios
-                .get('http://173.249.32.58:3030/wallets/creditcard', config)
+                .get('https://api.leonardosamara.com:8443/wallets/creditcard', config)
                 .then(response => (this.ccwallets = response.data));
         },
         store: function (event) {
@@ -77,11 +77,11 @@ new Vue({
 
 
             axios
-                .post('http://173.249.32.58:3030/transactions', account_plus, config)
+                .post('https://api.leonardosamara.com:8443/transactions', account_plus, config)
                 .then(function (response) {
 
                     axios
-                        .post('http://173.249.32.58:3030/transactions', account_minus, config)
+                        .post('https://api.leonardosamara.com:8443/transactions', account_minus, config)
                         .then(function (response) {
                             swal.fire("Deu certo!", "O pagamento foi registrado com sucesso!.", "success");
 
