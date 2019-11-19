@@ -208,7 +208,7 @@ class Modules
         if ($scripts !== null && $scripts !== "") {
             $scripts_path = $this->scripts_path . $scripts;
             if (file_exists($scripts_path)) {
-                $url = SERVER_ADDRESS . "edge/scripts/" . $scripts . "?v=" . date("dmYhis");
+                $url = SERVER_ADDRESS . "edge/scripts/" . $scripts . "?v=1";
                 //return $url;
                 return "<script async  type=\"text/javascript\" src=\"" . $url . "\"></script>";
                 //return file_get_contents($scripts_path);

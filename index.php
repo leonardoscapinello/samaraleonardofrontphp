@@ -2,6 +2,16 @@
 require_once("internal/settings/index.php");
 require_once("internal/session/validate-session.php");
 
+$heading = $modules->loadHeading();
+$module = $modules->load();
+
+if (!$module) {
+    header("location: " . $modules->getModuleUrlByKey("TRANSACTIONS_REGISTER_DEBIT"));
+    die;
+}
+
+
+ob_start("sanitize_output");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,101 +25,8 @@ require_once("internal/session/validate-session.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+    <link rel="stylesheet" href="assets/css/compiled/samaraleonardo.min.css">
 
-    <!--end::Fonts -->
-
-    <!--begin::Page Vendors Styles(used by this page) -->
-
-    <!--end::Page Vendors Styles -->
-
-    <!--begin::Global Theme Styles(used by all pages) -->
-
-    <!--begin:: Vendor Plugins -->
-    <link href="assets/plugins/general/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/tether/dist/css/tether.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-timepicker/css/bootstrap-timepicker.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/select2/dist/css/select2.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/ion-rangeslider/css/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/nouislider/distribute/nouislider.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/owl.carousel/dist/assets/owl.carousel.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/owl.carousel/dist/assets/owl.theme.default.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/quill/dist/quill.snow.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/summernote/dist/summernote.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/general/animate.css/animate.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/toastr/build/toastr.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/dual-listbox/dist/dual-listbox.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/morris.js/morris.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/sweetalert2/dist/sweetalert2.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/socicon/css/socicon.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/plugins/line-awesome/css/line-awesome.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/plugins/flaticon/flaticon.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/plugins/flaticon2/flaticon.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/general/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"/>
-
-    <!--end:: Vendor Plugins -->
-    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/css/content-placeholder.css" rel="stylesheet" type="text/css"/>
-
-    <!--begin:: Vendor Plugins for custom pages -->
-    <link href="assets/plugins/custom/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/@fullcalendar/core/main.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/@fullcalendar/daygrid/main.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/@fullcalendar/list/main.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/@fullcalendar/timegrid/main.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-autofill-bs4/css/autoFill.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-colreorder-bs4/css/colReorder.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-fixedcolumns-bs4/css/fixedColumns.bootstrap4.min.css"
-          rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.min.css"
-          rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-keytable-bs4/css/keyTable.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-rowgroup-bs4/css/rowGroup.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-rowreorder-bs4/css/rowReorder.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/datatables.net-select-bs4/css/select.bootstrap4.min.css" rel="stylesheet"
-          type="text/css"/>
-    <link href="assets/plugins/custom/jstree/dist/themes/default/style.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/jqvmap/dist/jqvmap.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/uppy/dist/uppy.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/plugins/custom/jkanban/dist/jkanban.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/css/fontawesome.all.min.css" rel="stylesheet" type="text/css"/>
-
-    <!--end:: Vendor Plugins for custom pages -->
-
-    <!--end::Global Theme Styles -->
-
-    <!--begin::Layout Skins(used by all pages) -->
-
-    <!--end::Layout Skins -->
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
 
 </head>
@@ -163,12 +80,14 @@ require_once("internal/session/validate-session.php");
 
                         <!-- end:: Brand -->
 
-                        <!-- begin:: Header Topbar -->
-                        <div class="kt-header__topbar">
+                        <?php if (!true) { ?>
+                            <!-- begin:: Header Topbar -->
+                            <div class="kt-header__topbar">
 
-                            <!--begin: Notifications -->
-                            <div class="kt-header__topbar-item dropdown">
-                                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
+                                <!--begin: Notifications -->
+                                <div class="kt-header__topbar-item dropdown">
+                                    <div class="kt-header__topbar-wrapper" data-toggle="dropdown"
+                                         data-offset="10px,10px">
 											<span class="kt-header__topbar-icon  kt-pulse kt-pulse--warning">
 
 												<!--<i class="flaticon2-bell-alarm-symbol"></i>-->
@@ -185,411 +104,413 @@ require_once("internal/session/validate-session.php");
 													</g>
 												</svg> <span class="kt-pulse__ring"></span>
 											</span>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
-                                    <form>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
+                                        <form>
 
-                                        <!--begin: Head -->
-                                        <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"
-                                             style="background-image: url(assets/media/misc/bg-1.jpg)">
-                                            <h3 class="kt-head__title">
-                                                User Notifications
-                                                &nbsp;
-                                                <span class="btn btn-success btn-sm btn-bold btn-font-md">23 new</span>
-                                            </h3>
-                                            <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"
-                                                role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active show" data-toggle="tab"
-                                                       href="#topbar_notifications_notifications" role="tab"
-                                                       aria-selected="true">Alerts</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab"
-                                                       href="#topbar_notifications_events" role="tab"
-                                                       aria-selected="false">Events</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab"
-                                                       href="#topbar_notifications_logs" role="tab"
-                                                       aria-selected="false">Logs</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                            <!--begin: Head -->
+                                            <div class="kt-head kt-head--skin-dark kt-head--fit-x kt-head--fit-b"
+                                                 style="background-image: url(assets/media/misc/bg-1.jpg)">
+                                                <h3 class="kt-head__title">
+                                                    User Notifications
+                                                    &nbsp;
+                                                    <span class="btn btn-success btn-sm btn-bold btn-font-md">23 new</span>
+                                                </h3>
+                                                <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-success kt-notification-item-padding-x"
+                                                    role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active show" data-toggle="tab"
+                                                           href="#topbar_notifications_notifications" role="tab"
+                                                           aria-selected="true">Alerts</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-toggle="tab"
+                                                           href="#topbar_notifications_events" role="tab"
+                                                           aria-selected="false">Events</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-toggle="tab"
+                                                           href="#topbar_notifications_logs" role="tab"
+                                                           aria-selected="false">Logs</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
 
-                                        <!--end: Head -->
-                                        <div class="tab-content">
-                                            <div class="tab-pane active show" id="topbar_notifications_notifications"
-                                                 role="tabpanel">
-                                                <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"
-                                                     data-scroll="true" data-height="300" data-mobile-height="200">
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-line-chart kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New order has been received
+                                            <!--end: Head -->
+                                            <div class="tab-content">
+                                                <div class="tab-pane active show"
+                                                     id="topbar_notifications_notifications"
+                                                     role="tabpanel">
+                                                    <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"
+                                                         data-scroll="true" data-height="300" data-mobile-height="200">
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-line-chart kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                2 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New order has been received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    2 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-box-1 kt-font-brand"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer is registered
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-box-1 kt-font-brand"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer is registered
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-chart2 kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Application has been approved
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-chart2 kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Application has been approved
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-image-file kt-font-warning"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New file has been uploaded
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-image-file kt-font-warning"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                5 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New file has been uploaded
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    5 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-drop kt-font-info"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New user feedback received
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-drop kt-font-info"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                8 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New user feedback received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    8 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-pie-chart-2 kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                System reboot has been successfully completed
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-pie-chart-2 kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                12 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    System reboot has been successfully completed
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    12 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-favourite kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New order has been placed
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-favourite kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                15 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New order has been placed
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    15 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#"
-                                                       class="kt-notification__item kt-notification__item--read">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-safe kt-font-primary"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Company meeting canceled
+                                                        </a>
+                                                        <a href="#"
+                                                           class="kt-notification__item kt-notification__item--read">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-safe kt-font-primary"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                19 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Company meeting canceled
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    19 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-psd kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New report has been received
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-psd kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                23 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New report has been received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    23 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon-download-1 kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Finance report has been generated
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon-download-1 kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                25 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Finance report has been generated
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    25 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon-security kt-font-warning"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer comment recieved
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon-security kt-font-warning"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                2 days ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer comment recieved
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    2 days ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-pie-chart kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer is registered
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-pie-chart kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 days ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer is registered
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 days ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
-                                                <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"
-                                                     data-scroll="true" data-height="300" data-mobile-height="200">
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-psd kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New report has been received
+                                                <div class="tab-pane" id="topbar_notifications_events" role="tabpanel">
+                                                    <div class="kt-notification kt-margin-t-10 kt-margin-b-10 kt-scroll"
+                                                         data-scroll="true" data-height="300" data-mobile-height="200">
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-psd kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                23 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New report has been received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    23 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon-download-1 kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Finance report has been generated
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon-download-1 kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                25 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Finance report has been generated
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    25 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-line-chart kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New order has been received
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-line-chart kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                2 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New order has been received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    2 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-box-1 kt-font-brand"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer is registered
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-box-1 kt-font-brand"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer is registered
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-chart2 kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Application has been approved
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-chart2 kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Application has been approved
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-image-file kt-font-warning"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New file has been uploaded
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-image-file kt-font-warning"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                5 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New file has been uploaded
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    5 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-drop kt-font-info"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New user feedback received
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-drop kt-font-info"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                8 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New user feedback received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    8 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-pie-chart-2 kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                System reboot has been successfully completed
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-pie-chart-2 kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                12 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    System reboot has been successfully completed
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    12 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-favourite kt-font-brand"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New order has been placed
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-favourite kt-font-brand"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                15 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New order has been placed
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    15 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#"
-                                                       class="kt-notification__item kt-notification__item--read">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-safe kt-font-primary"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Company meeting canceled
+                                                        </a>
+                                                        <a href="#"
+                                                           class="kt-notification__item kt-notification__item--read">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-safe kt-font-primary"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                19 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Company meeting canceled
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    19 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-psd kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New report has been received
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-psd kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                23 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New report has been received
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    23 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon-download-1 kt-font-danger"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                Finance report has been generated
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon-download-1 kt-font-danger"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                25 hrs ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    Finance report has been generated
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    25 hrs ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon-security kt-font-warning"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer comment recieved
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon-security kt-font-warning"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                2 days ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer comment recieved
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    2 days ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                    <a href="#" class="kt-notification__item">
-                                                        <div class="kt-notification__item-icon">
-                                                            <i class="flaticon2-pie-chart kt-font-success"></i>
-                                                        </div>
-                                                        <div class="kt-notification__item-details">
-                                                            <div class="kt-notification__item-title">
-                                                                New customer is registered
+                                                        </a>
+                                                        <a href="#" class="kt-notification__item">
+                                                            <div class="kt-notification__item-icon">
+                                                                <i class="flaticon2-pie-chart kt-font-success"></i>
                                                             </div>
-                                                            <div class="kt-notification__item-time">
-                                                                3 days ago
+                                                            <div class="kt-notification__item-details">
+                                                                <div class="kt-notification__item-title">
+                                                                    New customer is registered
+                                                                </div>
+                                                                <div class="kt-notification__item-time">
+                                                                    3 days ago
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane" id="topbar_notifications_logs" role="tabpanel">
-                                                <div class="kt-grid kt-grid--ver" style="min-height: 200px;">
-                                                    <div class="kt-grid kt-grid--hor kt-grid__item kt-grid__item--fluid kt-grid__item--middle">
-                                                        <div class="kt-grid__item kt-grid__item--middle kt-align-center">
-                                                            All caught up!
-                                                            <br>No new notifications.
+                                                <div class="tab-pane" id="topbar_notifications_logs" role="tabpanel">
+                                                    <div class="kt-grid kt-grid--ver" style="min-height: 200px;">
+                                                        <div class="kt-grid kt-grid--hor kt-grid__item kt-grid__item--fluid kt-grid__item--middle">
+                                                            <div class="kt-grid__item kt-grid__item--middle kt-align-center">
+                                                                All caught up!
+                                                                <br>No new notifications.
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!--end: Notifications -->
+                                <!--end: Notifications -->
 
-                            <!--begin: Quick actions -->
-                            <div class="kt-header__topbar-item dropdown">
-                                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px">
+                                <!--begin: Quick actions -->
+                                <div class="kt-header__topbar-item dropdown">
+                                    <div class="kt-header__topbar-wrapper" data-toggle="dropdown"
+                                         data-offset="10px,10px">
 											<span class="kt-header__topbar-icon">
 
 												<!--<i class="flaticon2-gear"></i>-->
@@ -609,26 +530,26 @@ require_once("internal/session/validate-session.php");
                                                               rx="1.5"/>
 													</g>
 												</svg> </span>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
-                                    <form>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
+                                        <form>
 
-                                        <!--begin: Head -->
-                                        <div class="kt-head kt-head--skin-dark"
-                                             style="background-image: url(assets/media/misc/bg-1.jpg)">
-                                            <h3 class="kt-head__title">
-                                                S&L Ecossistema
-                                                <span class="kt-space-15"></span>
-                                                <span class="btn btn-success btn-sm btn-bold btn-font-md">você tem 23 pendências</span>
-                                            </h3>
-                                        </div>
+                                            <!--begin: Head -->
+                                            <div class="kt-head kt-head--skin-dark"
+                                                 style="background-image: url(assets/media/misc/bg-1.jpg)">
+                                                <h3 class="kt-head__title">
+                                                    S&L Ecossistema
+                                                    <span class="kt-space-15"></span>
+                                                    <span class="btn btn-success btn-sm btn-bold btn-font-md">você tem 23 pendências</span>
+                                                </h3>
+                                            </div>
 
-                                        <!--end: Head -->
+                                            <!--end: Head -->
 
-                                        <!--begin: Grid Nav -->
-                                        <div class="kt-grid-nav kt-grid-nav--skin-light">
-                                            <div class="kt-grid-nav__row">
-                                                <a href="#" class="kt-grid-nav__item">
+                                            <!--begin: Grid Nav -->
+                                            <div class="kt-grid-nav kt-grid-nav--skin-light">
+                                                <div class="kt-grid-nav__row">
+                                                    <a href="#" class="kt-grid-nav__item">
 															<span class="kt-grid-nav__icon">
 																<svg xmlns="http://www.w3.org/2000/svg"
                                                                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -644,22 +565,22 @@ require_once("internal/session/validate-session.php");
                                                                               fill="#000000"/>
 																	</g>
 																</svg> </span>
-                                                    <span class="kt-grid-nav__title">Financeiro</span>
-                                                    <span class="kt-grid-nav__desc">Gestão Econômica</span>
-                                                </a>
-                                                <a href="#" class="kt-grid-nav__item"
-                                                   style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
+                                                        <span class="kt-grid-nav__title">Financeiro</span>
+                                                        <span class="kt-grid-nav__desc">Gestão Econômica</span>
+                                                    </a>
+                                                    <a href="#" class="kt-grid-nav__item"
+                                                       style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
 															<span class="kt-grid-nav__icon">
                                                                 <i class="fad fa-home-alt"
                                                                    style="--fa-secondary-opacity: 1.0;--fa-primary-color: #B6EBDB; --fa-secondary-color: #0ABB87;"></i>
                                                             </span>
-                                                    <span class="kt-grid-nav__title">Administração</span>
-                                                    <span class="kt-grid-nav__desc">Adm. Residencial</span>
-                                                </a>
-                                            </div>
-                                            <div class="kt-grid-nav__row">
-                                                <a href="#" class="kt-grid-nav__item"
-                                                   style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
+                                                        <span class="kt-grid-nav__title">Administração</span>
+                                                        <span class="kt-grid-nav__desc">Adm. Residencial</span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-grid-nav__row">
+                                                    <a href="#" class="kt-grid-nav__item"
+                                                       style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
 															<span class="kt-grid-nav__icon">
 																<svg xmlns="http://www.w3.org/2000/svg"
                                                                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -675,11 +596,11 @@ require_once("internal/session/validate-session.php");
                                                                               fill="#000000" opacity="0.3"/>
 																	</g>
 																</svg> </span>
-                                                    <span class="kt-grid-nav__title">Projetos</span>
-                                                    <span class="kt-grid-nav__desc">Planejamentos</span>
-                                                </a>
-                                                <a href="#" class="kt-grid-nav__item"
-                                                   style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
+                                                        <span class="kt-grid-nav__title">Projetos</span>
+                                                        <span class="kt-grid-nav__desc">Planejamentos</span>
+                                                    </a>
+                                                    <a href="#" class="kt-grid-nav__item"
+                                                       style="webkit-filter: grayscale(100%);filter: grayscale(100%);">
 															<span class="kt-grid-nav__icon">
 																<svg xmlns="http://www.w3.org/2000/svg"
                                                                      xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -696,23 +617,23 @@ require_once("internal/session/validate-session.php");
                                                                               fill="#000000" fill-rule="nonzero"/>
 																	</g>
 																</svg> </span>
-                                                    <span class="kt-grid-nav__title">Pessoas</span>
-                                                    <span class="kt-grid-nav__desc">Recursos Humanos</span>
-                                                </a>
+                                                        <span class="kt-grid-nav__title">Pessoas</span>
+                                                        <span class="kt-grid-nav__desc">Recursos Humanos</span>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <!--end: Grid Nav -->
-                                    </form>
+                                            <!--end: Grid Nav -->
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!--end: Quick actions -->
+                                <!--end: Quick actions -->
 
-                            <!--begin: Quick panel -->
-                            <div class="kt-header__topbar-item kt-header__topbar-item--quick-panel"
-                                 data-toggle="kt-tooltip" title="Quick panel" data-placement="left">
-                                <div class="kt-header__topbar-wrapper">
+                                <!--begin: Quick panel -->
+                                <div class="kt-header__topbar-item kt-header__topbar-item--quick-panel"
+                                     data-toggle="kt-tooltip" title="Quick panel" data-placement="left">
+                                    <div class="kt-header__topbar-wrapper">
 											<span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
 
 												<!--<i class="flaticon2-cube-1"></i>-->
@@ -727,127 +648,128 @@ require_once("internal/session/validate-session.php");
                                                               fill="#000000" opacity="0.3"/>
 													</g>
 												</svg> </span>
-                                </div>
-                            </div>
-
-                            <!--end: Quick panel -->
-
-                            <!--begin: User bar -->
-                            <div class="kt-header__topbar-item kt-header__topbar-item--user">
-                                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,10px"
-                                     aria-expanded="false">
-                                    <span class="kt-header__topbar-welcome">Olá,</span>
-                                    <span class="kt-header__topbar-username">{{first_name}}</span>
-
-                                    <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                    <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden-">L</span>
-                                </div>
-                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
-
-                                    <!--begin: Head -->
-                                    <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x"
-                                         style="background-image: url(assets/media/misc/bg-1.jpg)">
-                                        <div class="kt-user-card__avatar">
-                                            <img class="kt-hidden" alt="Pic" src="assets/media/users/300_25.jpg"/>
-
-                                            <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
-                                            <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">L</span>
-                                        </div>
-                                        <div class="kt-user-card__name">
-                                            {{username}}
-                                        </div>
-                                        <div class="kt-user-card__badge">
-                                            <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
-                                        </div>
                                     </div>
-
-                                    <!--end: Head -->
-
-                                    <!--begin: Navigation -->
-                                    <div class="kt-notification">
-                                        <a href="custom/apps/user/profile-1/personal-information.html"
-                                           class="kt-notification__item">
-                                            <div class="kt-notification__item-icon">
-                                                <i class="flaticon2-calendar-3 kt-font-success"></i>
-                                            </div>
-                                            <div class="kt-notification__item-details">
-                                                <div class="kt-notification__item-title kt-font-bold">
-                                                    My Profile
-                                                </div>
-                                                <div class="kt-notification__item-time">
-                                                    Account settings and more
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
-                                            <div class="kt-notification__item-icon">
-                                                <i class="flaticon2-mail kt-font-warning"></i>
-                                            </div>
-                                            <div class="kt-notification__item-details">
-                                                <div class="kt-notification__item-title kt-font-bold">
-                                                    My Messages
-                                                </div>
-                                                <div class="kt-notification__item-time">
-                                                    Inbox and tasks
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="custom/apps/user/profile-2.html" class="kt-notification__item">
-                                            <div class="kt-notification__item-icon">
-                                                <i class="flaticon2-rocket-1 kt-font-danger"></i>
-                                            </div>
-                                            <div class="kt-notification__item-details">
-                                                <div class="kt-notification__item-title kt-font-bold">
-                                                    My Activities
-                                                </div>
-                                                <div class="kt-notification__item-time">
-                                                    Logs and notifications
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
-                                            <div class="kt-notification__item-icon">
-                                                <i class="flaticon2-hourglass kt-font-brand"></i>
-                                            </div>
-                                            <div class="kt-notification__item-details">
-                                                <div class="kt-notification__item-title kt-font-bold">
-                                                    My Tasks
-                                                </div>
-                                                <div class="kt-notification__item-time">
-                                                    latest tasks and projects
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="custom/apps/user/profile-1/overview.html"
-                                           class="kt-notification__item">
-                                            <div class="kt-notification__item-icon">
-                                                <i class="flaticon2-cardiogram kt-font-warning"></i>
-                                            </div>
-                                            <div class="kt-notification__item-details">
-                                                <div class="kt-notification__item-title kt-font-bold">
-                                                    Billing
-                                                </div>
-                                                <div class="kt-notification__item-time">
-                                                    billing & statements <span
-                                                            class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">2 pending</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <div class="kt-notification__custom kt-space-between">
-                                            <a href="custom/user/login-v2.html" target="_blank"
-                                               class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
-                                            <a href="custom/user/login-v2.html" target="_blank"
-                                               class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
-                                        </div>
-                                    </div>
-
-                                    <!--end: Navigation -->
                                 </div>
+
+                                <!--end: Quick panel -->
+
+                                <!--begin: User bar -->
+                                <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                                    <div class="kt-header__topbar-wrapper" data-toggle="dropdown"
+                                         data-offset="10px,10px"
+                                         aria-expanded="false">
+                                        <span class="kt-header__topbar-welcome">Olá,</span>
+                                        <span class="kt-header__topbar-username">{{first_name}}</span>
+
+                                        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                        <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold kt-hidden-">L</span>
+                                    </div>
+                                    <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
+
+                                        <!--begin: Head -->
+                                        <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x"
+                                             style="background-image: url(assets/media/misc/bg-1.jpg)">
+                                            <div class="kt-user-card__avatar">
+                                                <img class="kt-hidden" alt="Pic" src="assets/media/users/300_25.jpg"/>
+
+                                                <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                                <span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">L</span>
+                                            </div>
+                                            <div class="kt-user-card__name">
+                                                {{username}}
+                                            </div>
+                                            <div class="kt-user-card__badge">
+                                                <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
+                                            </div>
+                                        </div>
+
+                                        <!--end: Head -->
+
+                                        <!--begin: Navigation -->
+                                        <div class="kt-notification">
+                                            <a href="custom/apps/user/profile-1/personal-information.html"
+                                               class="kt-notification__item">
+                                                <div class="kt-notification__item-icon">
+                                                    <i class="flaticon2-calendar-3 kt-font-success"></i>
+                                                </div>
+                                                <div class="kt-notification__item-details">
+                                                    <div class="kt-notification__item-title kt-font-bold">
+                                                        My Profile
+                                                    </div>
+                                                    <div class="kt-notification__item-time">
+                                                        Account settings and more
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
+                                                <div class="kt-notification__item-icon">
+                                                    <i class="flaticon2-mail kt-font-warning"></i>
+                                                </div>
+                                                <div class="kt-notification__item-details">
+                                                    <div class="kt-notification__item-title kt-font-bold">
+                                                        My Messages
+                                                    </div>
+                                                    <div class="kt-notification__item-time">
+                                                        Inbox and tasks
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="custom/apps/user/profile-2.html" class="kt-notification__item">
+                                                <div class="kt-notification__item-icon">
+                                                    <i class="flaticon2-rocket-1 kt-font-danger"></i>
+                                                </div>
+                                                <div class="kt-notification__item-details">
+                                                    <div class="kt-notification__item-title kt-font-bold">
+                                                        My Activities
+                                                    </div>
+                                                    <div class="kt-notification__item-time">
+                                                        Logs and notifications
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
+                                                <div class="kt-notification__item-icon">
+                                                    <i class="flaticon2-hourglass kt-font-brand"></i>
+                                                </div>
+                                                <div class="kt-notification__item-details">
+                                                    <div class="kt-notification__item-title kt-font-bold">
+                                                        My Tasks
+                                                    </div>
+                                                    <div class="kt-notification__item-time">
+                                                        latest tasks and projects
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a href="custom/apps/user/profile-1/overview.html"
+                                               class="kt-notification__item">
+                                                <div class="kt-notification__item-icon">
+                                                    <i class="flaticon2-cardiogram kt-font-warning"></i>
+                                                </div>
+                                                <div class="kt-notification__item-details">
+                                                    <div class="kt-notification__item-title kt-font-bold">
+                                                        Billing
+                                                    </div>
+                                                    <div class="kt-notification__item-time">
+                                                        billing & statements <span
+                                                                class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">2 pending</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="kt-notification__custom kt-space-between">
+                                                <a href="custom/user/login-v2.html" target="_blank"
+                                                   class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
+                                                <a href="custom/user/login-v2.html" target="_blank"
+                                                   class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
+                                            </div>
+                                        </div>
+
+                                        <!--end: Navigation -->
+                                    </div>
+                                </div>
+
+                                <!--end: User bar -->
                             </div>
-
-                            <!--end: User bar -->
-                        </div>
-
+                        <?php } ?>
                         <!-- end:: Header Topbar -->
                     </div>
                 </div>
@@ -870,11 +792,6 @@ require_once("internal/session/validate-session.php");
                     </div>
                 </div>
             </div>
-            <?php
-            $heading = $modules->loadHeading();
-            $module = $modules->load();
-            ?>
-
             <!-- end:: Header -->
             <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
                 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
@@ -887,7 +804,9 @@ require_once("internal/session/validate-session.php");
                     <div class="kt-container  kt-grid__item kt-grid__item--fluid">
                         <div id="slApplication">
 
-                            <?php if ($module) require_once($module); ?>
+                            <?php if ($module) {
+                                require_once($module);
+                            } ?>
                         </div>
                     </div>
 
@@ -1363,9 +1282,12 @@ require_once("internal/session/validate-session.php");
 
 <!--begin:: Vendor Plugins -->
 
+
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="assets/plugins/general/jquery/dist/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="assets/css/compiled/samaraleonardo.js"></script>
+
 <script src="assets/plugins/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 <script src="assets/plugins/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/plugins/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -1438,7 +1360,8 @@ require_once("internal/session/validate-session.php");
 <script src="assets/plugins/general/counterup/jquery.counterup.js" type="text/javascript"></script>
 <script src="assets/plugins/general/es6-promise-polyfill/promise.min.js" type="text/javascript"></script>
 <script src="assets/plugins/general/sweetalert2/dist/sweetalert2.min.js" type="text/javascript"></script>
-<script src="assets/plugins/general/js/global/integration/plugins/sweetalert2.init.js" type="text/javascript"></script>
+<script src="assets/plugins/general/js/global/integration/plugins/sweetalert2.init.js"
+        type="text/javascript"></script>
 <script src="assets/plugins/general/jquery.repeater/src/lib.js" type="text/javascript"></script>
 <script src="assets/plugins/general/jquery.repeater/src/jquery.input.js" type="text/javascript"></script>
 <script src="assets/plugins/general/jquery.repeater/src/repeater.js" type="text/javascript"></script>
@@ -1465,7 +1388,8 @@ require_once("internal/session/validate-session.php");
 <script src="assets/plugins/custom/flot/source/jquery.flot.axislabels.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net/js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-bs4/js/dataTables.bootstrap4.js" type="text/javascript"></script>
-<script src="assets/plugins/custom/js/global/integration/plugins/datatables.init.js" type="text/javascript"></script>
+<script src="assets/plugins/custom/js/global/integration/plugins/datatables.init.js"
+        type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-autofill/js/dataTables.autoFill.min.js"
         type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-autofill-bs4/js/autoFill.bootstrap4.min.js"
@@ -1473,14 +1397,16 @@ require_once("internal/session/validate-session.php");
 <script src="assets/plugins/custom/jszip/dist/jszip.min.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/pdfmake/build/pdfmake.min.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/pdfmake/build/vfs_fonts.js" type="text/javascript"></script>
-<script src="assets/plugins/custom/datatables.net-buttons/js/dataTables.buttons.min.js" type="text/javascript"></script>
+<script src="assets/plugins/custom/datatables.net-buttons/js/dataTables.buttons.min.js"
+        type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"
         type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.colVis.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.flash.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.html5.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-buttons/js/buttons.print.js" type="text/javascript"></script>
-<script src="assets/plugins/custom/datatables.net-colreorder/js/dataTables.colReorder.min.js" type="text/javascript"></script>
+<script src="assets/plugins/custom/datatables.net-colreorder/js/dataTables.colReorder.min.js"
+        type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-fixedcolumns/js/dataTables.fixedColumns.min.js"
         type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"
@@ -1497,7 +1423,8 @@ require_once("internal/session/validate-session.php");
         type="text/javascript"></script>
 <script src="assets/plugins/custom/datatables.net-scroller/js/dataTables.scroller.min.js"
         type="text/javascript"></script>
-<script src="assets/plugins/custom/datatables.net-select/js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="assets/plugins/custom/datatables.net-select/js/dataTables.select.min.js"
+        type="text/javascript"></script>
 <script src="assets/plugins/custom/jstree/dist/jstree.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/jqvmap/dist/jquery.vmap.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/jqvmap/dist/maps/jquery.vmap.world.js" type="text/javascript"></script>
@@ -1523,44 +1450,6 @@ require_once("internal/session/validate-session.php");
 
 <!--begin::Page Scripts(used by this page)
 <script src="assets/js/pages/dashboard.js" type="text/javascript"></script> -->
-<script type="text/javascript">
-    var userSession =
-        {
-            user: "<?=$session->getIdAccount()?>",
-            token: "<?=$session->getJwtToken()?>"
-        }
-
-    Number.prototype.formatMoney = function (places, symbol, thousand, decimal) {
-        places = !isNaN(places = Math.abs(places)) ? places : 2;
-        symbol = symbol !== undefined ? symbol : "$";
-        thousand = thousand || ",";
-        decimal = decimal || ".";
-        var number = this,
-            negative = number < 0 ? "-" : "",
-            i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
-            j = (j = i.length) > 3 ? j % 3 : 0;
-        return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
-    };
-
-    function formatDate(inputFormat) {
-        function pad(s) {
-            return (s < 10) ? '0' + s : s;
-        }
-
-        var d = new Date(inputFormat)
-        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
-    }
-
-    function editTransaction(id_transaction) {
-        window.location.href = '<?=SERVER_ADDRESS?>/transactions/edit' + id_transaction;
-    }
-
-    $(document).ready(function () {
-        setTimeout(function () {
-            $(".money").mask('000000000000.00', {reverse: true});
-        }, 1000);
-    });
-</script>
 <?= $modules->scripts(); ?>
 <!--end::Page Scripts -->
 </body>

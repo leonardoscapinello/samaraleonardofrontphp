@@ -130,7 +130,7 @@ var KTLoginGeneral = function() {
                                  setLocalStorage('username', response.data.user.name);
                                  setTimeout(function() {
                                  window.location.reload();
-                                 },1500);
+                                 },500);
                              }, 2000);
                         }).catch(function(error){
                             setTimeout(function() {
