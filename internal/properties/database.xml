@@ -2,9 +2,9 @@
 <connection>
     <server>localhost</server>
     <port></port>
-    <user>root</user>
-    <password></password>
+    <user>leonardo_app</user>
+    <password>Z$06#[u^NBOx</password>
     <password_encryption>none</password_encryption>
-    <database>sl_interface</database>
+    <database>leonardo_interface</database>
     <db_model>mysql</db_model>
 </connection>

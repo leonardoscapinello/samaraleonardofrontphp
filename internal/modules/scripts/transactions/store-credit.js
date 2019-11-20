@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
-    window.setTimeout(function () {
+    window.setInterval(function () {
         $("#id_category,#id_wallet").selectpicker();
-    }, 2000);
+    }, 100);
 });
 
 

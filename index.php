@@ -14,7 +14,7 @@ if (!$module) {
 ob_start("sanitize_output");
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <!-- begin::Head -->
 <head>
@@ -26,9 +26,8 @@ ob_start("sanitize_output");
     <!--begin::Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
     <link rel="stylesheet" href="assets/css/compiled/samaraleonardo.min.css">
-
+    <link rel="manifest" href="/manifest.json?v=1.2">
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
-
 </head>
 
 <!-- end::Head -->
@@ -1286,8 +1285,15 @@ ob_start("sanitize_output");
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="assets/plugins/general/jquery/dist/jquery.js" type="text/javascript"></script>
-<script type="text/javascript" src="assets/css/compiled/samaraleonardo.js"></script>
-
+<script src="assets/js/jquery.mask.js" type="text/javascript"></script>
+<script type="text/javascript" src="/samaraleonardo.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setInterval(function () {
+            $(".money,#amount").mask('0000000.00', {reverse: true});
+        }, 1000);
+    });
+</script>
 <script src="assets/plugins/general/popper.js/dist/umd/popper.js" type="text/javascript"></script>
 <script src="assets/plugins/general/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="assets/plugins/general/js-cookie/src/js.cookie.js" type="text/javascript"></script>
@@ -1437,7 +1443,6 @@ ob_start("sanitize_output");
 <script src="assets/plugins/custom/tinymce/themes/silver/theme.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/tinymce/themes/mobile/theme.js" type="text/javascript"></script>
 <script src="assets/plugins/custom/jkanban/dist/jkanban.min.js" type="text/javascript"></script>
-<script src="assets/js/jquery.mask.js" type="text/javascript"></script>
 
 <!--end:: Vendor Plugins for custom pages -->
 

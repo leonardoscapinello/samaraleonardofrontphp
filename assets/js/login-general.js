@@ -108,10 +108,9 @@ var KTLoginGeneral = function() {
             var formDataObj = {};
 
             var jsonObject = form.serializeObject();
-            console.log(jsonObject);
 
 
-            axios.post('http://173.249.32.58:3030/sessions', {
+            axios.post('https://api.leonardosamara.com:8443/sessions', {
                     email: jsonObject.email,
                     password: jsonObject.password
                 })

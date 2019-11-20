@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="11419645-9c7b-4a2f-8507-167da0ae3d80" name="LeonardoSamara" url="http://ftp.leonardosamara.com">
-        <fileTransfer host="ftp.leonardosamara.com" port="21" rootFolder="/public_html/personal-finance/">
+      <webServer id="11419645-9c7b-4a2f-8507-167da0ae3d80" name="LeonardoSamara" url="http://leonardosamara.com">
+        <fileTransfer host="ftp.leonardosamara.com" port="21" rootFolder="/public_html/personal-finance">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" showHiddenFiles="true" />
           </advancedOptions>

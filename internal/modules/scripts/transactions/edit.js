@@ -1,9 +1,10 @@
+/// EDIT IS NOT WORKING!!!! NEED BUILD IT
+
 jQuery(document).ready(function () {
     window.setInterval(function () {
         $("#id_category,#id_wallet").selectpicker();
     }, 100);
 });
-
 
 
 new Vue({
@@ -41,45 +42,45 @@ new Vue({
                 .get('https://api.leonardosamara.com:8443/wallets', this.config)
                 .then(response => (this.wallets = response.data));
         },
+        getTransaction: function () {
+            var id_transaction = document.getElementById("id_transaction").value;
+            axios
+                .get('https://api.leonardosamara.com:8443/transactions/' + id_transaction, this.config)
+                .then(response => {
+                    this.transaction = response.data
+                });
+        },
         store: function (event) {
             event.preventDefault();
-
             var form = document.getElementById('formElement');
             var formData = new FormData(form);
-
             formData.append("id_user", userSession.user);
             formData.append("is_credit", false);
-
             var object = {};
             formData.forEach(function (value, key) {
                 object[key] = value;
             });
             var json = JSON.stringify(object);
             json = JSON.parse(json);
-
             if (json.title.length < 5) {
                 swal.fire("Conte um pouco mais...", "Preencha o título do registro com um pouco mais de detalhes.", "warning");
                 return;
             }
-
             axios
-                .post('https://api.leonardosamara.com:8443/transactions', json, this.config)
+                .put('https://api.leonardosamara.com:8443/transactions', json, this.config)
                 .then(function (response) {
-                    swal.fire("Deu certo!", "Registro concluído com sucesso", "success");
+                    swal.fire("Deu certo!", "Registro atualizado com sucesso", "success");
                 })
                 .catch(function (error) {
-
-                    swal.fire("Não foi possível concluír o cadastro.", error.response.data.error, "error");
-
+                    swal.fire("Não foi possível atualizar o registro.", error.response.data.error, "error");
                 });
-
             console.log(json);
-
         }
     },
     mounted() {
         this.getCategories();
         this.getWallets();
+        this.getTransaction();
     }
 });
 

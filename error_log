@@ -1,0 +1,2 @@
+[19-Nov-2019 23:49:59 UTC] PHP Fatal error:  Call to a member function prepare() on null in /home/leonardosamara/public_html/personal-finance/internal/class/Database.php on line 61
+[20-Nov-2019 00:49:18 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/leonardosamara/public_html/personal-finance/internal/class/AccountSession.php on line 25

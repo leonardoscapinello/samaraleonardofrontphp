@@ -14,8 +14,13 @@ class Charset
     {
         $string = $this->str;
         if ($this->isString()) {
-
-            $out = iconv(mb_detect_encoding($string, mb_detect_order(), true), "UTF-8", $string);
+            $string = iconv(mb_detect_encoding($string, "UTF-8,ISO-8859-1"), "UTF-8", $string);
+            return $string;
+            $encoding = mb_detect_encoding($string, mb_detect_order(), false);
+            if ($encoding == "UTF-8") {
+                $string = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
+            }
+            $out = iconv(mb_detect_encoding($string, mb_detect_order(), false), "UTF-8//IGNORE", $string);
             return $out;
         }
         return null;

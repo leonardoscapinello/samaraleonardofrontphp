@@ -89,7 +89,7 @@ var KTDefaultDatatableDemo = function () {
                         overflow: "visible",
                         autoHide: !1,
                         template: function (t) {
-                            return '<div class="dropdown"><a href="transactions/edit/' + t.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete"><i class="la la-pencil"></i></a></div>'
+                            return '<div class="dropdown"><a href="transactions/edit?id=' + t.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete"><i class="la la-pencil"></i></a></div>'
                         }
                     }]
             });

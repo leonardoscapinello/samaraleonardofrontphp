@@ -34,8 +34,3 @@ function editTransaction(id_transaction) {
     window.location.href = '<?=SERVER_ADDRESS?>/transactions/edit' + id_transaction;
 }
 
-$(document).ready(function () {
-    setTimeout(function () {
-        $(".money").mask('000000000000.00', {reverse: true});
-    }, 1000);
-});
